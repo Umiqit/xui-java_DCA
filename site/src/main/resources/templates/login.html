@@ -404,10 +404,19 @@ body {
 </div>
 
 <script>
+function getCsrfToken() {
+    var match = document.cookie.match(/(?:^|;\s*)XSRF-TOKEN=([^;]*)/);
+    return match ? decodeURIComponent(match[1]) : '';
+}
+
 function onTelegramAuth(user) {
     fetch('/auth/telegram', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': getCsrfToken()
+        },
+        credentials: 'same-origin',
         body: JSON.stringify(user)
     })
     .then(r => {

@@ -20,7 +20,7 @@ public class OrderDao {
             ps.setLong(1, o.userId);
             ps.setLong(2, o.productId);
             if (o.keyId != null) ps.setLong(3, o.keyId); else ps.setNull(3, java.sql.Types.BIGINT);
-            ps.setDouble(4, o.amount);
+            ps.setBigDecimal(4, o.amount);
             ps.setString(5, o.status);
             ps.executeUpdate();
             try (ResultSet keys = ps.getGeneratedKeys()) {
@@ -59,7 +59,7 @@ public class OrderDao {
                 rs.getLong("user_id"),
                 rs.getLong("product_id"),
                 rs.wasNull() ? null : keyId,
-                rs.getDouble("amount"),
+                rs.getBigDecimal("amount"),
                 rs.getString("status"),
                 rs.getString("created_at"),
                 rs.getString("product_name")

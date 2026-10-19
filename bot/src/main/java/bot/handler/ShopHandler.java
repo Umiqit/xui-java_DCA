@@ -89,7 +89,7 @@ public class ShopHandler {
             return;
         }
 
-        if (user.balance < product.price) {
+        if (user.balance == null || user.balance.compareTo(product.price) < 0) {
             String text = String.format(Messages.SHOP_BUY_NO_BALANCE, user.balance, product.price);
             bot.execute(EditMessageText.builder()
                     .chatId(call.getMessage().getChatId().toString())
@@ -122,7 +122,7 @@ public class ShopHandler {
 
         Server server = XuiClientFactory.pickBestServer();
         if (server == null) {
-            UserDao.deductBalance(user.id, -product.price);
+            UserDao.deductBalance(user.id, product.price.negate());
             bot.execute(EditMessageText.builder()
                     .chatId(call.getMessage().getChatId().toString())
                     .messageId(call.getMessage().getMessageId())
@@ -145,7 +145,7 @@ public class ShopHandler {
             );
             if (!result.success()) {
                 // Refund balance
-                UserDao.deductBalance(user.id, -product.price);
+                UserDao.deductBalance(user.id, product.price.negate());
                 bot.execute(EditMessageText.builder()
                         .chatId(call.getMessage().getChatId().toString())
                         .messageId(call.getMessage().getMessageId())
@@ -188,7 +188,7 @@ public class ShopHandler {
         } catch (XuiApiException e) {
             log.error("Shop purchase XUI error", e);
             // Refund balance
-            UserDao.deductBalance(user.id, -product.price);
+            UserDao.deductBalance(user.id, product.price.negate());
             bot.execute(EditMessageText.builder()
                     .chatId(call.getMessage().getChatId().toString())
                     .messageId(call.getMessage().getMessageId())

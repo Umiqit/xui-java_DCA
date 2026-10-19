@@ -1,6 +1,7 @@
 package site.entity;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
@@ -21,8 +22,8 @@ public class User {
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "balance")
-    private Double balance = 0.0;
+    @Column(name = "balance", nullable = false, precision = 19, scale = 2)
+    private BigDecimal balance = BigDecimal.ZERO;
 
     @Column(name = "created_at")
     private Timestamp createdAt;
@@ -39,8 +40,8 @@ public class User {
     public String getFullName() { return fullName; }
     public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public Double getBalance() { return balance; }
-    public void setBalance(Double balance) { this.balance = balance; }
+    public BigDecimal getBalance() { return balance; }
+    public void setBalance(BigDecimal balance) { this.balance = balance; }
 
     public Timestamp getCreatedAt() { return createdAt; }
     public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }

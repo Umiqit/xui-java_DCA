@@ -675,16 +675,6 @@
               Обновить
             </button>
           </div>
-          <form th:action="@{${adminPath} + '/db-repair'}" method="post" style="display:inline;">
-            <div class="btn-wrap" onclick="this.closest('form').submit()" style="cursor:pointer;">
-              <button type="submit" class="btn-inner">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84a.484.484 0 0 0-.48.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.488.488 0 0 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.27.41.48.41h3.84c.24 0 .44-.17.48-.41l.36-2.54c.59-.24 1.13-.58 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
-                </svg>
-                Починить БД
-              </button>
-            </div>
-          </form>
         </div>
       </div>
 
@@ -743,6 +733,11 @@
               </tr>
             </tbody>
           </table>
+          <div class="pagination" th:if="${usersTotalPages > 1}" style="margin-top:0.75rem; display:flex; gap:0.5rem; align-items:center;">
+            <a th:if="${usersPage > 0}" th:href="@{${adminPath}(page=${usersPage - 1})}" style="padding:0.35rem 0.75rem; border:1px solid var(--md-sys-color-outline-variant); border-radius:8px;">← Назад</a>
+            <span th:text="${usersPage + 1} + ' / ' + ${usersTotalPages}" style="opacity:0.7;"></span>
+            <a th:if="${usersPage + 1 < usersTotalPages}" th:href="@{${adminPath}(page=${usersPage + 1})}" style="padding:0.35rem 0.75rem; border:1px solid var(--md-sys-color-outline-variant); border-radius:8px;">Вперёд →</a>
+          </div>
         </div>
       </div>
 
@@ -785,6 +780,11 @@
               </tr>
             </tbody>
           </table>
+          <div class="pagination" th:if="${keysTotalPages > 1}" style="margin-top:0.75rem; display:flex; gap:0.5rem; align-items:center;">
+            <a th:if="${keysPage > 0}" th:href="@{${adminPath}(page=${keysPage - 1})}" style="padding:0.35rem 0.75rem; border:1px solid var(--md-sys-color-outline-variant); border-radius:8px;">← Назад</a>
+            <span th:text="${keysPage + 1} + ' / ' + ${keysTotalPages}" style="opacity:0.7;"></span>
+            <a th:if="${keysPage + 1 < keysTotalPages}" th:href="@{${adminPath}(page=${keysPage + 1})}" style="padding:0.35rem 0.75rem; border:1px solid var(--md-sys-color-outline-variant); border-radius:8px;">Вперёд →</a>
+          </div>
         </div>
       </div>
 
@@ -881,6 +881,11 @@
               </tr>
             </tbody>
           </table>
+          <div class="pagination" th:if="${paymentsTotalPages > 1}" style="margin-top:0.75rem; display:flex; gap:0.5rem; align-items:center;">
+            <a th:if="${paymentsPage > 0}" th:href="@{${adminPath}(page=${paymentsPage - 1})}" style="padding:0.35rem 0.75rem; border:1px solid var(--md-sys-color-outline-variant); border-radius:8px;">← Назад</a>
+            <span th:text="${paymentsPage + 1} + ' / ' + ${paymentsTotalPages}" style="opacity:0.7;"></span>
+            <a th:if="${paymentsPage + 1 < paymentsTotalPages}" th:href="@{${adminPath}(page=${paymentsPage + 1})}" style="padding:0.35rem 0.75rem; border:1px solid var(--md-sys-color-outline-variant); border-radius:8px;">Вперёд →</a>
+          </div>
         </div>
       </div>
     </div>

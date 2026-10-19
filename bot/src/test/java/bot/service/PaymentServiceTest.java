@@ -26,20 +26,20 @@ class PaymentServiceTest {
     @Test
     void shouldCreatePayment() throws Exception {
         long userId = insertUser(111, "u", "U");
-        long pid = PaymentService.createPayment(userId, 100, "XTR", "test");
+        long pid = PaymentService.createPayment(userId, java.math.BigDecimal.valueOf(100), "XTR", "test");
         assertTrue(pid > 0);
     }
 
     @Test
     void shouldConfirmPaymentAndUpdateBalance() throws Exception {
         long userId = insertUser(222, "u2", "U2");
-        long pid = PaymentService.createPayment(userId, 50, "XTR", "test2");
+        long pid = PaymentService.createPayment(userId, java.math.BigDecimal.valueOf(50), "XTR", "test2");
 
-        PaymentService.confirmPayment(pid, userId, 50);
+        PaymentService.confirmPayment(pid, userId, java.math.BigDecimal.valueOf(50));
 
         var user = UserDao.findByTgId(222);
         assertNotNull(user);
-        assertEquals(50.0, user.balance, 0.001);
+        assertEquals(0, new java.math.BigDecimal("50.00").compareTo(user.balance));
     }
 
     private long insertUser(long tgId, String username, String fullName) throws Exception {

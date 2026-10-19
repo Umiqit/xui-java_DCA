@@ -16,7 +16,7 @@ public class PaymentDao {
         try (Connection c = Database.get();
              PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setLong(1, p.userId);
-            ps.setDouble(2, p.amount);
+            ps.setBigDecimal(2, p.amount);
             ps.setString(3, p.currency);
             ps.setString(4, p.payload);
             ps.executeUpdate();

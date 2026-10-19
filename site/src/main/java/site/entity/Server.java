@@ -25,6 +25,7 @@ public class Server {
     private String username;
 
     @Column(name = "password", nullable = false)
+    @Convert(converter = site.service.ServerPasswordConverter.class)
     private String password;
 
     @Column(name = "cert_path")

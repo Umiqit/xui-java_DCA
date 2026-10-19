@@ -29,7 +29,7 @@ public class PaymentHandler {
     public static void handlePayStars(AbsSender bot, CallbackQuery call, int amount) throws TelegramApiException {
         Long userId = UserDao.getIdByTgId(call.getFrom().getId());
         if (userId == null) return;
-        long paymentId = PaymentService.createPayment(userId, amount, "XTR",
+        long paymentId = PaymentService.createPayment(userId, java.math.BigDecimal.valueOf(amount), "XTR",
                 "topup_" + userId + "_" + amount);
         bot.execute(SendInvoice.builder()
                 .chatId(call.getMessage().getChatId().toString())
@@ -55,7 +55,7 @@ public class PaymentHandler {
 
         Long userId = UserDao.getIdByTgId(msg.getFrom().getId());
         if (userId == null) return;
-        PaymentService.confirmPayment(paymentId, userId, amount);
+        PaymentService.confirmPayment(paymentId, userId, java.math.BigDecimal.valueOf(amount));
 
         bot.execute(SendMessage.builder()
                 .chatId(msg.getChatId())

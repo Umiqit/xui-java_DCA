@@ -1,18 +1,20 @@
 package bot.db.model;
 
+import java.math.BigDecimal;
+
 public class Order {
     public long id;
     public long userId;
     public long productId;
     public Long keyId;
-    public double amount;
+    public BigDecimal amount;
     public String status;
     public String createdAt;
     public String productName;
 
     public Order() {}
 
-    public Order(long id, long userId, long productId, Long keyId, double amount, String status, String createdAt, String productName) {
+    public Order(long id, long userId, long productId, Long keyId, BigDecimal amount, String status, String createdAt, String productName) {
         this.id = id;
         this.userId = userId;
         this.productId = productId;

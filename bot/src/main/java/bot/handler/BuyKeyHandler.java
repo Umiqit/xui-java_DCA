@@ -19,6 +19,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class BuyKeyHandler {
@@ -122,7 +123,7 @@ public class BuyKeyHandler {
             return;
         }
 
-        if (user.balance < price) {
+        if (user.balance == null || user.balance.compareTo(BigDecimal.valueOf(price)) < 0) {
             bot.execute(org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery.builder()
                     .callbackQueryId(call.getId())
                     .text(String.format("Недостаточно средств. Нужно %d ⭐", price))
@@ -132,7 +133,7 @@ public class BuyKeyHandler {
         }
 
         // Deduct balance
-        boolean deducted = UserDao.deductBalance(user.id, price);
+        boolean deducted = UserDao.deductBalance(user.id, BigDecimal.valueOf(price));
         if (!deducted) {
             bot.execute(org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery.builder()
                     .callbackQueryId(call.getId())
@@ -151,7 +152,7 @@ public class BuyKeyHandler {
             XuiClient.AddResult result = client.addClient(inboundId, email, remark, expiryTs, gb);
             if (!result.success()) {
                 // Refund
-                UserDao.addBalance(user.id, price);
+                UserDao.addBalance(user.id, java.math.BigDecimal.valueOf(price));
                 bot.execute(EditMessageText.builder()
                         .chatId(call.getMessage().getChatId().toString())
                         .messageId(call.getMessage().getMessageId())
@@ -173,7 +174,8 @@ public class BuyKeyHandler {
             KeyDao.insert(key);
 
             User updatedUser = UserDao.findByTgId(tgId);
-            double remaining = updatedUser != null ? updatedUser.balance : 0;
+            double remaining = updatedUser != null && updatedUser.balance != null
+                    ? updatedUser.balance.doubleValue() : 0;
 
             String expiryStr = days > 0 ? days + " дней" : "Бессрочно";
             String trafficStr = gb > 0 ? gb + " GB" : "Безлимит";
@@ -200,7 +202,7 @@ public class BuyKeyHandler {
 
         } catch (XuiApiException e) {
             // Refund
-            UserDao.addBalance(user.id, price);
+            UserDao.addBalance(user.id, java.math.BigDecimal.valueOf(price));
             bot.execute(EditMessageText.builder()
                     .chatId(call.getMessage().getChatId().toString())
                     .messageId(call.getMessage().getMessageId())

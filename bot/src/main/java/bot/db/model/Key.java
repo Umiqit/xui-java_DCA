@@ -22,7 +22,8 @@ public class Key {
     public Key() {}
 
     public double trafficUsedGb() {
-        return Math.round((trafficUp + trafficDown) / (1024.0 * 1024 * 1024) * 100.0) / 100.0;
+        // divide separately to avoid long overflow on up+down
+        return trafficUp / (1024.0 * 1024 * 1024) + trafficDown / (1024.0 * 1024 * 1024);
     }
 
     public double trafficTotalGb() {

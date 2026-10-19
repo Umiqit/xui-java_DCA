@@ -1,5 +1,6 @@
 package bot.db.dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,22 +80,22 @@ public class UserDao {
         }
     }
 
-    public static boolean deductBalance(long userId, double amount) {
+    public static boolean deductBalance(long userId, BigDecimal amount) {
         String sql = "UPDATE users SET balance = balance - ? WHERE id = ? AND balance >= ?";
         try (Connection c = Database.get(); PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setDouble(1, amount);
+            ps.setBigDecimal(1, amount);
             ps.setLong(2, userId);
-            ps.setDouble(3, amount);
+            ps.setBigDecimal(3, amount);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException("UserDao.deductBalance failed", e);
         }
     }
 
-    public static void addBalance(long userId, double amount) {
+    public static void addBalance(long userId, BigDecimal amount) {
         String sql = "UPDATE users SET balance = balance + ? WHERE id = ?";
         try (Connection c = Database.get(); PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setDouble(1, amount);
+            ps.setBigDecimal(1, amount);
             ps.setLong(2, userId);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -120,7 +121,7 @@ public class UserDao {
                 rs.getLong("tg_id"),
                 rs.getString("username"),
                 rs.getString("full_name"),
-                rs.getDouble("balance"),
+                rs.getBigDecimal("balance"),
                 rs.getString("created_at")
         );
     }

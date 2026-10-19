@@ -19,16 +19,19 @@ public class TelegramAuthService {
 
     private static final Logger log = LoggerFactory.getLogger(TelegramAuthService.class);
 
+    private static final long FUTURE_TOLERANCE_SECONDS = 60;
+
     @Value("${telegram.bot-token}")
     private String botToken;
+
+    @Value("${telegram.auth-max-age-seconds:600}")
+    private long authMaxAgeSeconds;
 
     @PostConstruct
     public void init() {
         if (botToken == null || botToken.isBlank()) {
-            System.err.println("[TelegramAuthService] BOT_TOKEN is not set!");
             log.error("BOT_TOKEN is not set! Telegram auth will fail.");
         } else {
-            System.out.println("[TelegramAuthService] Initialized. Token length: " + botToken.length());
             log.info("TelegramAuthService initialized. Token length: {}", botToken.length());
         }
     }
@@ -39,10 +42,10 @@ public class TelegramAuthService {
             return false;
         }
 
-        System.out.println("[TelegramAuthService] Verifying auth for id=" + data.getId() +
-                ", username=" + data.getUsername() + ", authDate=" + data.getAuthDate());
-        log.info("Verifying Telegram auth for id={}, username={}, authDate={}",
-                data.getId(), data.getUsername(), data.getAuthDate());
+        if (!isAuthDateFresh(data.getAuthDate())) {
+            log.info("Telegram auth failed for tgId={}: stale auth_date", data.getId());
+            return false;
+        }
 
         Map<String, String> fields = new TreeMap<>();
         fields.put("auth_date", String.valueOf(data.getAuthDate()));
@@ -68,6 +71,13 @@ public class TelegramAuthService {
         String dataCheckString = sb.toString();
         log.debug("dataCheckString: {}", dataCheckString);
 
+        String receivedHash = data.getHash();
+        if (receivedHash == null || receivedHash.isBlank()) {
+            log.info("Telegram auth failed for tgId={}: hash is empty", data.getId());
+            return false;
+        }
+        receivedHash = receivedHash.trim().toLowerCase();
+
         try {
             // Login Widget uses SHA256(botToken) as secret key
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -79,19 +89,35 @@ public class TelegramAuthService {
             byte[] hashBytes = mac.doFinal(dataCheckString.getBytes(StandardCharsets.UTF_8));
 
             String computedHash = bytesToHex(hashBytes);
-            System.out.println("[TelegramAuthService] Computed hash: " + computedHash +
-                    ", Received hash: " + data.getHash());
-            log.info("Computed hash: {}, Received hash: {}", computedHash, data.getHash());
-            boolean ok = computedHash.equalsIgnoreCase(data.getHash());
-            if (!ok) {
-                System.out.println("[TelegramAuthService] Hash mismatch!");
-                log.warn("Hash mismatch! Auth failed.");
+            log.debug("Computed hash: {}, received hash: {}", computedHash, receivedHash);
+
+            boolean ok = MessageDigest.isEqual(
+                    computedHash.getBytes(StandardCharsets.UTF_8),
+                    receivedHash.getBytes(StandardCharsets.UTF_8));
+            if (ok) {
+                log.info("Telegram auth ok for tgId={}", data.getId());
+            } else {
+                log.info("Telegram auth failed for tgId={}: hash mismatch", data.getId());
             }
             return ok;
         } catch (Exception e) {
-            log.error("Error verifying Telegram auth", e);
+            log.error("Error verifying Telegram auth for tgId=" + data.getId(), e);
             return false;
         }
+    }
+
+    private boolean isAuthDateFresh(long authDate) {
+        long now = System.currentTimeMillis() / 1000L;
+        long age = now - authDate;
+        if (age > authMaxAgeSeconds) {
+            log.debug("auth_date is stale: age={}s (max={}s)", age, authMaxAgeSeconds);
+            return false;
+        }
+        if (age < -FUTURE_TOLERANCE_SECONDS) {
+            log.debug("auth_date is in the future: age={}s (tolerance={}s)", age, FUTURE_TOLERANCE_SECONDS);
+            return false;
+        }
+        return true;
     }
 
     private String bytesToHex(byte[] bytes) {

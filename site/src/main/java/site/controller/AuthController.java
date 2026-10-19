@@ -1,5 +1,6 @@
 package site.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,12 +35,15 @@ public class AuthController {
 
     @PostMapping("/auth/telegram")
     @ResponseBody
-    public ResponseEntity<?> telegramAuth(@RequestBody TelegramAuthData data, HttpSession session) {
+    public ResponseEntity<?> telegramAuth(@RequestBody TelegramAuthData data,
+                                          HttpServletRequest request, HttpSession session) {
         if (!authService.verify(data)) {
             return ResponseEntity.status(401).body(Map.of("error", "Invalid Telegram auth data"));
         }
 
         User user = userService.findOrCreate(data.getId(), data.getUsername(), data.getFirstName());
+        // session fixation protection: rotate the session id on privilege change
+        request.changeSessionId();
         session.setAttribute("userId", user.getId());
         session.setAttribute("tgId", user.getTgId());
         session.setAttribute("username", user.getUsername());
@@ -47,9 +51,11 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("success", true));
     }
 
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate();
+        if (session != null) {
+            session.invalidate();
+        }
         return "redirect:/";
     }
 }

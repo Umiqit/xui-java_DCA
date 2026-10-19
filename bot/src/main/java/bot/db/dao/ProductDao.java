@@ -43,7 +43,7 @@ public class ProductDao {
                 rs.getLong("id"),
                 rs.getString("name"),
                 rs.getString("description"),
-                rs.getDouble("price"),
+                rs.getBigDecimal("price"),
                 rs.getInt("duration_days"),
                 rs.getInt("traffic_gb"),
                 rs.getInt("inbound_id"),

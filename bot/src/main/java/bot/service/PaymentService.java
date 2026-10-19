@@ -4,13 +4,14 @@ import bot.db.Database;
 import bot.db.dao.PaymentDao;
 import bot.db.model.Payment;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PaymentService {
 
-    public static long createPayment(long userId, double amount, String currency, String payload) {
+    public static long createPayment(long userId, BigDecimal amount, String currency, String payload) {
         Payment p = new Payment();
         p.userId = userId;
         p.amount = amount;
@@ -19,7 +20,7 @@ public class PaymentService {
         return PaymentDao.create(p);
     }
 
-    public static void confirmPayment(long paymentId, long userId, double amount) {
+    public static void confirmPayment(long paymentId, long userId, BigDecimal amount) {
         try (Connection c = Database.get()) {
             c.setAutoCommit(false);
             try {
@@ -30,7 +31,7 @@ public class PaymentService {
                 }
                 try (PreparedStatement ps = c.prepareStatement(
                         "UPDATE users SET balance = balance + ? WHERE id=?")) {
-                    ps.setDouble(1, amount);
+                    ps.setBigDecimal(1, amount);
                     ps.setLong(2, userId);
                     ps.executeUpdate();
                 }

@@ -16,7 +16,7 @@ public class AdminService {
             String name = u.fullName != null ? u.fullName : u.username;
             if (name == null) name = String.valueOf(u.tgId);
             sb.append("• <code>").append(u.tgId).append("</code> ")
-              .append(name).append(" — ").append((int) u.balance).append("⭐\n");
+              .append(name).append(" — ").append(u.balance == null ? "0" : u.balance.toPlainString()).append("⭐\n");
         }
         return sb.toString();
     }
@@ -30,7 +30,7 @@ public class AdminService {
         int limit = Math.min(30, clients.size());
         for (int i = 0; i < limit; i++) {
             JsonNode cl = clients.get(i);
-            double used = Math.round((cl.path("up").asLong(0) + cl.path("down").asLong(0))
+            double used = Math.round((cl.path("up").asDouble(0) + cl.path("down").asDouble(0))
                     / (1024.0 * 1024 * 1024) * 100.0) / 100.0;
             double total = Math.round(cl.path("total").asLong(0) / (1024.0 * 1024 * 1024) * 100.0) / 100.0;
             String en = cl.path("enable").asBoolean(false) ? "🟢" : "🔴";

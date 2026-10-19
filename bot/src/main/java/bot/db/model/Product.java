@@ -1,10 +1,12 @@
 package bot.db.model;
 
+import java.math.BigDecimal;
+
 public class Product {
     public long id;
     public String name;
     public String description;
-    public double price;
+    public BigDecimal price;
     public int durationDays;
     public int trafficGb;
     public int inboundId;
@@ -13,7 +15,7 @@ public class Product {
 
     public Product() {}
 
-    public Product(long id, String name, String description, double price, int durationDays, int trafficGb, int inboundId, int sortOrder, boolean active) {
+    public Product(long id, String name, String description, BigDecimal price, int durationDays, int trafficGb, int inboundId, int sortOrder, boolean active) {
         this.id = id;
         this.name = name;
         this.description = description;

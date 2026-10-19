@@ -59,7 +59,7 @@ public class ServerDao {
             ps.setString(2, s.location);
             ps.setString(3, s.url);
             ps.setString(4, s.username);
-            ps.setString(5, s.password);
+            ps.setString(5, bot.util.Crypto.encryptIfPossible(s.password));
             ps.setString(6, s.certPath);
             ps.setBoolean(7, s.active);
             ps.setInt(8, s.weight);
@@ -83,7 +83,7 @@ public class ServerDao {
             ps.setString(2, s.location);
             ps.setString(3, s.url);
             ps.setString(4, s.username);
-            ps.setString(5, s.password);
+            ps.setString(5, bot.util.Crypto.encryptIfPossible(s.password));
             ps.setString(6, s.certPath);
             ps.setBoolean(7, s.active);
             ps.setInt(8, s.weight);
@@ -123,7 +123,7 @@ public class ServerDao {
         s.location = rs.getString("location");
         s.url = rs.getString("url");
         s.username = rs.getString("username");
-        s.password = rs.getString("password");
+        s.password = bot.util.Crypto.decryptIfPossible(rs.getString("password"));
         s.certPath = rs.getString("cert_path");
         s.active = rs.getBoolean("active");
         s.weight = rs.getInt("weight");

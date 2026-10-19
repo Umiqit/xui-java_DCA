@@ -82,7 +82,9 @@ public class Key {
     public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
 
     public double trafficUsedGb() {
-        return (trafficUp + trafficDown) / (1024.0 * 1024.0 * 1024.0);
+        // divide separately to avoid long overflow on up+down
+        return trafficUp / (1024.0 * 1024.0 * 1024.0)
+                + trafficDown / (1024.0 * 1024.0 * 1024.0);
     }
 
     public double trafficTotalGb() {
