@@ -51,7 +51,7 @@ public class SecurityConfig {
 
     /** Static resource prefixes accessible without a session. */
     private static final List<String> PUBLIC_PREFIXES = List.of(
-            "/static/**", "/css/**", "/js/**", "/images/**", "/icons/**", "/assets/**"
+            "/static/**", "/css/**", "/js/**", "/images/**", "/icons/**", "/assets/**", "/favicon/**"
     );
 
     @Bean
