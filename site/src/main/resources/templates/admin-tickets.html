@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Тикеты — DreamCore</title>
+<title>Поддержка — DreamCore Access</title>
 <link rel="icon" href="/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
@@ -84,8 +84,12 @@ body {
   background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-secondary));
   border-radius: var(--md-sys-shape-corner-medium);
   display: grid; place-items: center;
-  margin-bottom: 1.5rem;
   box-shadow: var(--md-elevation-1);
+  flex-shrink: 0;
+}
+
+.rail > .rail-logo {
+  margin-bottom: 1.5rem;
 }
 
 .rail-logo svg { width: 22px; height: 22px; fill: var(--md-sys-color-on-primary); }
@@ -776,7 +780,6 @@ body {
   .footer-inner { flex-direction: column; text-align: center; }
 }
 </style>
-<base target="_blank">
 </head>
 <body>
 
@@ -790,6 +793,13 @@ body {
     if(xhr.readyState===4 && xhr.status===200){
       var ph = document.getElementById('rail-placeholder');
       if(ph) ph.outerHTML = xhr.responseText;
+      var page = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.rail-item').forEach(function(el){
+        var href = el.getAttribute('href');
+        var dataPage = el.getAttribute('data-page');
+        if(href && (href === page || href.endsWith('/' + page) || page === href.split('?')[0])) el.classList.add('active');
+        if(dataPage && page.startsWith(dataPage)) el.classList.add('active');
+      });
     }
   };
   xhr.send();
@@ -907,15 +917,15 @@ body {
           DreamCore
         </a>
         <div class="footer-links">
-          <a href="return-policy.html">
+          <a href="/return-policy">
             <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
             Политика возврата
           </a>
-          <a href="offer.html">
+          <a href="/offer">
             <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
             Оферта
           </a>
-          <a href="privacy.html">
+          <a href="/privacy">
             <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
             Конфиденциальность
           </a>

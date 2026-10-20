@@ -45,7 +45,6 @@ body {
 @media (max-width: 900px) { .main { margin-left: 64px; } }
 @media (max-width: 600px) { .main { margin-left: 0; } .container { padding: 1rem; } .page-title { font-size: 1.75rem; } }
 </style>
-<base target="_blank">
 </head>
 <body>
 
@@ -58,6 +57,13 @@ body {
     if(xhr.readyState===4 && xhr.status===200){
       var ph = document.getElementById('rail-placeholder');
       if(ph) ph.outerHTML = xhr.responseText;
+      var page = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.rail-item').forEach(function(el){
+        var href = el.getAttribute('href');
+        var dataPage = el.getAttribute('data-page');
+        if(href && (href === page || href.endsWith('/' + page) || page === href.split('?')[0])) el.classList.add('active');
+        if(dataPage && page.startsWith(dataPage)) el.classList.add('active');
+      });
     }
   };
   xhr.send();
@@ -110,7 +116,7 @@ body {
   </div>
 
   <footer class="footer">
-    © 2026 DreamCore. Воплощаем цифровые мечты.
+    © 2026 DreamCore Access. Защищённый доступ к вашим ресурсам.
   </footer>
 </div>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DreamCore — Ваш проводник в свободный интернет</title>
+<title>DreamCore Access — Защищённый доступ к вашим ресурсам</title>
 <link rel="icon" href="/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
@@ -78,6 +78,7 @@ body {
   padding: 1rem 0;
   z-index: 1000;
   gap: 0.5rem;
+  overflow-y: auto;
 }
 
 .rail-logo {
@@ -85,8 +86,12 @@ body {
   background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-secondary));
   border-radius: var(--md-sys-shape-corner-medium);
   display: grid; place-items: center;
-  margin-bottom: 1.5rem;
   box-shadow: var(--md-elevation-1);
+  flex-shrink: 0;
+}
+
+.rail > .rail-logo {
+  margin-bottom: 1.5rem;
 }
 
 .rail-logo svg { width: 22px; height: 22px; fill: var(--md-sys-color-on-primary); }
@@ -107,6 +112,7 @@ body {
   cursor: pointer;
   border: none;
   background: transparent;
+  flex-shrink: 0;
 }
 
 .rail-item:hover {
@@ -153,6 +159,78 @@ body {
   margin: 0.5rem 0;
   border-radius: 1px;
   box-shadow: 0 0 8px rgba(255, 157, 0, 0.4);
+  flex-shrink: 0;
+}
+
+/* ===== Top header ===== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(15,15,17,0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.topbar-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0.7rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--md-sys-color-on-surface);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.brand em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.topnav a {
+  color: var(--md-sys-color-on-surface-variant);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color var(--md-sys-motion-duration-short) var(--md-sys-motion-easing-standard);
+  white-space: nowrap;
+}
+
+.topnav a:hover { color: var(--md-sys-color-primary); }
+
+.topnav .nav-login {
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 8px;
+  padding: 0.35rem 1rem;
+  transition: all var(--md-sys-motion-duration-short) var(--md-sys-motion-easing-standard);
+}
+
+.topnav .nav-login:hover {
+  border-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-primary);
 }
 
 /* ===== Main content ===== */
@@ -200,6 +278,14 @@ body {
   max-width: 440px;
 }
 
+.hero-trust {
+  font-size: 0.8rem;
+  color: var(--md-sys-color-on-surface-variant);
+  letter-spacing: 0.02em;
+}
+
+.hero-trust b { color: var(--md-sys-color-primary); font-weight: 700; }
+
 .hero-visual {
   aspect-ratio: 4/3;
   border-radius: var(--md-sys-shape-corner-extra-large);
@@ -213,7 +299,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: 
+  background:
     radial-gradient(circle at 30% 70%, rgba(255,255,255,0.15) 0%, transparent 50%),
     radial-gradient(circle at 70% 30%, rgba(0,0,0,0.2) 0%, transparent 50%);
 }
@@ -245,7 +331,7 @@ body {
 }
 
 
-/* ===== Neon Glow Buttons — Updated: light bg + dark text ===== */
+/* ===== Neon Glow Buttons ===== */
 .btn-wrap {
   position: relative;
   padding: 3px;
@@ -376,6 +462,135 @@ body {
 .bento-card h3 { font-size: 1.125rem; font-weight: 500; }
 .bento-card p { font-size: 0.875rem; color: var(--md-sys-color-on-surface-variant); line-height: 1.6; }
 
+/* ===== Audience ===== */
+.audience-card {
+  background: var(--md-sys-color-surface-container);
+  border-radius: var(--md-sys-shape-corner-extra-large);
+  padding: 2.5rem;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  box-shadow: var(--md-elevation-1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.audience-card p {
+  font-size: 1.05rem;
+  color: var(--md-sys-color-on-surface);
+  line-height: 1.7;
+  max-width: 720px;
+}
+
+.audience-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: var(--md-sys-color-primary-container);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: var(--md-sys-shape-corner-large);
+  padding: 1rem 1.25rem;
+  font-size: 0.9rem;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.6;
+  max-width: 720px;
+}
+
+.audience-note svg {
+  width: 20px; height: 20px;
+  fill: var(--md-sys-color-primary);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+/* ===== Pricing ===== */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  padding-bottom: 2rem;
+}
+
+.price-card {
+  background: var(--md-sys-color-surface-container);
+  border-radius: var(--md-sys-shape-corner-large);
+  padding: 1.5rem;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  box-shadow: var(--md-elevation-1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing-standard);
+}
+
+.price-card:hover {
+  background: var(--md-sys-color-surface-container-high);
+  box-shadow: var(--md-elevation-3);
+  transform: translateY(-2px);
+}
+
+.price-card.featured {
+  border-color: var(--md-sys-color-primary);
+  background: linear-gradient(160deg, var(--md-sys-color-primary-container), var(--md-sys-color-surface-container));
+  position: relative;
+}
+
+.price-card .plan-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #ff9d00, #ff6b00);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.75rem;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.price-card h3 { font-size: 1.1rem; font-weight: 500; }
+
+.price-card .price {
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--md-sys-color-on-surface);
+}
+
+.price-card .price small {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.price-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.price-card ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.5;
+}
+
+.price-card ul li svg {
+  width: 16px; height: 16px;
+  fill: var(--md-sys-color-primary);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.price-card .btn-wrap { align-self: flex-start; }
+
 /* ===== Stats ===== */
 .stats-row {
   display: grid;
@@ -397,6 +612,35 @@ body {
 .stat-card:hover { box-shadow: var(--md-elevation-2); }
 .stat-card .stat-num { font-size: 2rem; font-weight: 700; color: var(--md-sys-color-on-surface); line-height: 1; }
 .stat-card .stat-label { font-size: 0.75rem; color: var(--md-sys-color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.5rem; font-weight: 500; }
+
+/* ===== FAQ (landing) ===== */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 2.5rem;
+}
+
+.faq-item {
+  background: var(--md-sys-color-surface-container);
+  border-radius: var(--md-sys-shape-corner-large);
+  padding: 1.5rem;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  box-shadow: var(--md-elevation-1);
+}
+
+.faq-item h3 {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--md-sys-color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.faq-item p {
+  font-size: 0.95rem;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.6;
+}
 
 /* ===== CTA ===== */
 .cta-section { padding: 2rem 0 3rem; }
@@ -468,6 +712,35 @@ body {
   margin-top: 1.5rem;
   opacity: 0.6;
 }
+
+.footer-legal {
+  text-align: center;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.78rem;
+  margin-top: 0.5rem;
+  opacity: 0.75;
+}
+
+.footer-legal a {
+  color: var(--md-sys-color-on-surface-variant);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--md-sys-color-outline);
+}
+
+.footer-legal a:hover { color: var(--md-sys-color-primary); }
+
+/* ===== Logo square (header/footer) ===== */
+.rail-logo {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-secondary));
+  border-radius: var(--md-sys-shape-corner-small);
+  display: grid; place-items: center;
+  box-shadow: var(--md-elevation-1);
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.rail-logo svg { width: 18px; height: 18px; fill: var(--md-sys-color-on-primary); }
 
 /* ===== Modal ===== */
 .modal-overlay {
@@ -545,22 +818,30 @@ body {
   .hero-visual { aspect-ratio: 16/9; max-height: 300px; }
   .hero-text h1 { font-size: 2.5rem; }
   .bento-grid { grid-template-columns: repeat(2, 1fr); }
+  .pricing-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .topnav { gap: 0.9rem; }
+  .topnav a { font-size: 0.82rem; }
 }
 
 @media (max-width: 600px) {
   .rail { display: none; }
   .main { margin-left: 0; }
   .container { padding: 0 1rem; }
+  .topbar-inner { padding: 0.6rem 1rem; }
+  .brand { font-size: 0.95rem; }
+  .topnav { gap: 0.7rem; }
+  .topnav a.nav-mid { display: none; }
   .hero-text h1 { font-size: 2rem; }
   .bento-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .cta-card { padding: 2rem 1.5rem; }
+  .audience-card { padding: 1.5rem; }
   .footer-inner { flex-direction: column; text-align: center; }
 }
 
 </style>
-<base target="_blank">
 </head>
 <body>
 
@@ -574,41 +855,99 @@ body {
     if(xhr.readyState===4 && xhr.status===200){
       var ph = document.getElementById('rail-placeholder');
       if(ph) ph.outerHTML = xhr.responseText;
+      var page = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.rail-item').forEach(function(el){
+        var href = el.getAttribute('href');
+        var dataPage = el.getAttribute('data-page');
+        if(href && (href === page || href.endsWith('/' + page) || page.startsWith(href.replace('/','')))) el.classList.add('active');
+        if(dataPage && page.startsWith(dataPage)) el.classList.add('active');
+      });
+      setupScrollSpy();
     }
   };
   xhr.send();
+
+  // Подсветка пункта рейла при прокрутке к секциям главной
+  function setupScrollSpy(){
+    var sections = [
+      {id:'features', href:'/#features'},
+      {id:'audience', href:'/#audience'},
+      {id:'pricing',  href:'/#pricing'},
+      {id:'faq',      href:'/faq'}
+    ];
+    function setActive(href){
+      document.querySelectorAll('.rail-item').forEach(function(el){
+        el.classList.toggle('active', el.getAttribute('href') === href);
+      });
+    }
+    var ticking = false;
+    function onScroll(){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        ticking = false;
+        if(window.scrollY < 200){
+          setActive('/');
+          return;
+        }
+        var pos = window.scrollY + window.innerHeight * 0.35;
+        var current = '/';
+        sections.forEach(function(s){
+          var el = document.getElementById(s.id);
+          if(el && el.offsetTop <= pos) current = s.href;
+        });
+        setActive(current);
+      });
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('load', onScroll);
+    onScroll();
+  }
 })();
 </script>
 
 <!-- Main Content -->
 <div class="main">
 
+  <!-- Header -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="/" class="brand">
+        <div class="rail-logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        </div>
+        DreamCore&nbsp;<em>Access</em>
+      </a>
+      <nav class="topnav">
+        <a href="#pricing" target="_self">Тарифы</a>
+        <a href="#audience" target="_self" class="nav-mid">Для кого</a>
+        <a href="/faq">FAQ</a>
+        <a href="/support">Поддержка</a>
+        <a href="/login" class="nav-login">Войти</a>
+      </nav>
+    </div>
+  </header>
+
   <!-- Hero -->
   <section class="hero">
     <div class="container">
       <div class="hero-grid">
         <div class="hero-text anim">
-          <h1>Живи своей<br><span class="gradient-text">цифровой свободой</span></h1>
-          <p>Стирай границы. Будь онлайн там, где захочешь. Надёжно и свободно.</p>
+          <h1>Защищённый доступ<br>к <span class="gradient-text">вашим ресурсам</span></h1>
+          <p>Стабильное шифрованное соединение для удалённой работы, учёбы и доступа к личным сервисам.</p>
           <div style="display:flex; gap:1rem; flex-wrap:wrap;">
-            <!-- Neon button -->
-            <div class="btn-wrap" onclick="openModal()">
+            <div class="btn-wrap" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">
               <button class="btn-inner">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
-                Воплотить мечту
-              </button>
-            </div>
-            <!-- Neon outlined button -->
-            <div class="btn-wrap" onclick="openModal()">
-              <button class="btn-inner" >
-                Подробнее
+                Выбрать тариф
               </button>
             </div>
           </div>
+          <div class="hero-trust">Оплата подписки&nbsp;<b>•</b>&nbsp;Настройка за пару минут&nbsp;<b>•</b>&nbsp;Поддержка</div>
         </div>
         <div class="hero-visual anim anim-d1">
           <div class="hero-logo">
-            <img src="icons/DreamCore.svg" alt="DreamCore Logo">
+            <img src="icons/DreamCore.svg" alt="DreamCore Access Logo">
           </div>
         </div>
       </div>
@@ -639,55 +978,156 @@ body {
 
   <!-- Features -->
   <section id="features" class="container">
-    <h2 class="section-title anim">Почему выбирают <span class="gradient-text">нас</span></h2>
+    <h2 class="section-title anim">Возможности <span class="gradient-text">DreamCore Access</span></h2>
     <div class="bento-grid">
 
       <div class="bento-card anim anim-d1">
         <div class="card-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
         </div>
-        <h3>Безграничная свобода</h3>
-        <p>Доступ к любому контенту из любой точки мира без ограничений и блокировок</p>
+        <h3>Шифрование трафика</h3>
+        <p>Все данные между вашим устройством и серверами передаются по защищённому шифрованному соединению</p>
       </div>
 
       <div class="bento-card anim anim-d2">
         <div class="card-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
         </div>
-        <h3>Абсолютная приватность</h3>
-        <p>Никаких логов, никакого отслеживания. Ваши данные остаются только вашими</p>
+        <h3>Все ваши устройства</h3>
+        <p>Доступ с телефона, ПК и планшета — iOS, Android, Windows и macOS под одной подпиской</p>
       </div>
 
       <div class="bento-card anim anim-d3">
         <div class="card-icon">
           <svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></svg>
         </div>
-        <h3>Высокая скорость</h3>
-        <p>Качественные сервера обеспечивают отличную скорость соединения</p>
+        <h3>Быстрое подключение</h3>
+        <p>Настройка занимает пару минут: получаете ссылку, вставляете в приложение — соединение готово</p>
       </div>
 
       <div class="bento-card anim anim-d1">
         <div class="card-icon">
-          <svg viewBox="0 0 24 24"><path d="M11 18h2v-3h3v-2h-3v-3h-2v3H8v2h3v3zm1-12c4.97 0 9 4.03 9 9s-4.03 9-9 9-9-4.03-9-9 4.03-9 9-9zm0-2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
         </div>
-        <h3>Простота использования</h3>
-        <p>Подключение в один клик на любом устройстве. Настройка за 30 секунд</p>
+        <h3>Серверы в нескольких странах</h3>
+        <p>Стабильные серверы в 7+ странах — выбирайте ближайшую точку для комфортной скорости</p>
       </div>
 
       <div class="bento-card anim anim-d2">
         <div class="card-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/></svg>
         </div>
-        <h3>Надёжность 99.9%</h3>
-        <p>Серверы работают круглосуточно с минимальным временем простоя</p>
+        <h3>Техподдержка</h3>
+        <p>Помогаем с настройкой и отвечаем на вопросы — через раздел «Поддержка» и Telegram-бота</p>
       </div>
 
       <div class="bento-card anim anim-d3">
         <div class="card-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 3v9.28c-.47-.17-.97-.28-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
         </div>
-        <h3>7+ стран</h3>
-        <p>Серверы в 7 странах обеспечивают стабильное соединение</p>
+        <h3>Автопродление подписки</h3>
+        <p>Подписка продлевается автоматически, а отключается в один клик в личном кабинете — в любой момент</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Audience -->
+  <section id="audience" class="container">
+    <h2 class="section-title anim">Для кого это</h2>
+    <div class="audience-card anim anim-d1">
+      <p>
+        Для фрилансеров, студентов, удалённых сотрудников и команд, которым нужен
+        стабильный и безопасный доступ к своим сервисам — рабочим инструментам,
+        учебным платформам и личным аккаунтам из любой точки мира.
+      </p>
+      <div class="audience-note">
+        <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+        <span>Сервис не предназначен для доступа к запрещённым ресурсам и обхода ограничений.
+        Используйте его в соответствии с законодательством вашей страны.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="container" style="padding-top: 3rem;">
+    <h2 class="section-title anim">Тарифы — <span class="gradient-text">подписки</span></h2>
+    <div class="pricing-grid">
+
+      <div class="price-card anim anim-d1">
+        <h3>Старт</h3>
+        <div class="price">199&nbsp;₽<small>/мес</small></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>До 5 устройств под одной подпиской</li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Автопродление отключается в один клик</li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Поддержка в чате</li>
+        </ul>
+        <div class="btn-wrap btn-wrap-sm" onclick="openModal()">
+          <button class="btn-inner">Оформить подписку</button>
+        </div>
+      </div>
+
+      <div class="price-card featured anim anim-d2">
+        <div class="plan-badge">Выгодно</div>
+        <h3>Плюс</h3>
+        <div class="price">499&nbsp;₽<small>за 3 месяца</small></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>До 5 устройств под одной подпиской</li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Приоритетная поддержка</li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Автопродление отключается в один клик</li>
+        </ul>
+        <div class="btn-wrap btn-wrap-sm" onclick="openModal()">
+          <button class="btn-inner">Оформить подписку</button>
+        </div>
+      </div>
+
+      <div class="price-card anim anim-d3">
+        <h3>Максимум</h3>
+        <div class="price">999&nbsp;₽<small>за 6 месяцев</small></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>До 5 устройств под одной подпиской</li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Приоритетная поддержка</li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Автопродление отключается в один клик</li>
+        </ul>
+        <div class="btn-wrap btn-wrap-sm" onclick="openModal()">
+          <button class="btn-inner">Оформить подписку</button>
+        </div>
+      </div>
+
+      <div class="price-card anim anim-d4">
+        <h3>Годовой</h3>
+        <div class="price">1999&nbsp;₽<small>за 12 месяцев</small></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>До 5 устройств под одной подпиской</li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Приоритетная поддержка</li>
+          <li><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Автопродление отключается в один клик</li>
+        </ul>
+        <div class="btn-wrap btn-wrap-sm" onclick="openModal()">
+          <button class="btn-inner">Оформить подписку</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="container">
+    <h2 class="section-title anim">Частые вопросы</h2>
+    <div class="faq-list">
+
+      <div class="faq-item anim anim-d1">
+        <h3>Это VPN?</h3>
+        <p>Это подписка на защищённый доступ через шифрованное соединение. Используйте сервис в соответствии с законодательством вашей страны.</p>
+      </div>
+
+      <div class="faq-item anim anim-d2">
+        <h3>Можно ли отменить подписку?</h3>
+        <p>Да, автопродление отключается в личном кабинете в один клик — доступ сохранится до конца уже оплаченного периода.</p>
+      </div>
+
+      <div class="faq-item anim anim-d3">
+        <h3>Какие устройства поддерживаются?</h3>
+        <p>iOS, Android, Windows и macOS. Под одной подпиской можно подключить до 5 устройств.</p>
       </div>
 
     </div>
@@ -696,12 +1136,12 @@ body {
   <!-- CTA -->
   <section class="cta-section container">
     <div class="cta-card anim">
-      <h2>Готовы начать?</h2>
-      <p>Присоединяйтесь к миллионам пользователей, которые уже наслаждаются свободным интернетом</p>
+      <h2>Готовы подключиться?</h2>
+      <p>Выберите подходящий тариф и получите защищённый доступ к своим ресурсам уже через пару минут после оплаты</p>
       <!-- Neon large button -->
-      <div class="btn-wrap btn-wrap-lg" onclick="openModal()">
+      <div class="btn-wrap btn-wrap-lg" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">
         <button class="btn-inner">
-          Попробовать бесплатно 10 дней
+          Выбрать тариф
         </button>
       </div>
     </div>
@@ -711,28 +1151,33 @@ body {
   <footer class="footer">
     <div class="container">
       <div class="footer-inner">
-        <a href="index.html" style="font-size:1.1rem; text-decoration:none; color:var(--md-sys-color-on-surface); display:flex; align-items:center; gap:0.5rem; font-weight:700;">
-          <div class="rail-logo" style="margin:0; width:28px; height:28px;">
+        <a href="/" style="font-size:1.1rem; text-decoration:none; color:var(--md-sys-color-on-surface); display:flex; align-items:center; gap:0.5rem; font-weight:700;">
+          <div class="rail-logo" style="width:28px; height:28px;">
             <svg viewBox="0 0 24 24" style="width:16px; height:16px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
           </div>
-          DreamCore
+          DreamCore Access
         </a>
         <div class="footer-links">
-          <a href="return-policy.html">
+          <a href="/return-policy">
             <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
             Политика возврата
           </a>
-          <a href="offer.html">
+          <a href="/offer">
             <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
             Оферта
           </a>
-          <a href="privacy.html">
+          <a href="/privacy">
             <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
             Конфиденциальность
           </a>
+          <a href="/support">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/></svg>
+            Поддержка
+          </a>
         </div>
       </div>
-      <div class="footer-copy">© 2026 DreamCore. Воплощаем цифровые мечты.</div>
+      <div class="footer-legal">Юридический email: <a href="mailto:legal@dreamcore-access.ru">legal@dreamcore-access.ru</a></div>
+      <div class="footer-copy">© 2026 DreamCore Access. Защищённый доступ к вашим ресурсам.</div>
     </div>
   </footer>
 
@@ -744,9 +1189,9 @@ body {
     <div class="modal-icon">
       <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
     </div>
-    <h3 style="font-size:1.25rem; font-weight:500; margin-bottom:0.5rem;">Скоро в Telegram</h3>
+    <h3 style="font-size:1.25rem; font-weight:500; margin-bottom:0.5rem;">Оплата скоро заработает</h3>
     <p style="color:var(--md-sys-color-on-surface-variant); font-size:0.9rem; margin-bottom:1.5rem;">
-      Наш канал в разработке. Скоро вы сможете подключиться к DreamCore через Telegram-бота.
+      Мы подключаем приём платежей. Скоро оформить подписку можно будет прямо на сайте или через Telegram-бота.
     </p>
     <!-- Neon button in modal -->
     <div class="btn-wrap" onclick="closeModal()">

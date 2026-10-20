@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FAQ — DreamCore</title>
+<title>FAQ — DreamCore Access</title>
 <link rel="icon" href="/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
@@ -43,7 +43,6 @@ body {
 @media (max-width: 900px) { .main { margin-left: 64px; } }
 @media (max-width: 600px) { .main { margin-left: 0; } .container { padding: 1rem; } .page-title { font-size: 1.75rem; } }
 </style>
-<base target="_blank">
 </head>
 <body>
 
@@ -56,6 +55,13 @@ body {
     if(xhr.readyState===4 && xhr.status===200){
       var ph = document.getElementById('rail-placeholder');
       if(ph) ph.outerHTML = xhr.responseText;
+      var page = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.rail-item').forEach(function(el){
+        var href = el.getAttribute('href');
+        var dataPage = el.getAttribute('data-page');
+        if(href && (href === page || href.endsWith('/' + page) || page === href.split('?')[0])) el.classList.add('active');
+        if(dataPage && page.startsWith(dataPage)) el.classList.add('active');
+      });
     }
   };
   xhr.send();
@@ -67,23 +73,28 @@ body {
     <h1 class="page-title">FAQ — Частые вопросы</h1>
 
     <div class="faq-item">
-      <h3>Что такое DreamCore?</h3>
-      <p>DreamCore — это VPN-сервис для свободного и безопасного доступа к интернету. Мы используем современные протоколы и не ведём логов.</p>
+      <h3>Это VPN?</h3>
+      <p>Это подписка на защищённый доступ через шифрованное соединение. Используйте сервис в соответствии с законодательством вашей страны.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Можно ли отменить подписку?</h3>
+      <p>Да, автопродление отключается в личном кабинете в один клик — доступ сохранится до конца уже оплаченного периода.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Какие устройства поддерживаются?</h3>
+      <p>iOS, Android, Windows и macOS. Под одной подпиской можно подключить до 5 устройств. Достаточно установить любой клиент, поддерживающий VLESS/Xray.</p>
     </div>
 
     <div class="faq-item">
       <h3>Как подключиться?</h3>
-      <p>После покупки ключа в нашем Telegram-боте вы получите ссылку для подключения. Скопируйте её в приложение V2Ray, Nekoray, V2RayNG или аналогичное.</p>
+      <p>После оформления подписки вы получаете ссылку для подключения. Скопируйте её в приложение V2Ray, Nekoray, V2RayNG или аналогичное — настройка занимает пару минут.</p>
     </div>
 
     <div class="faq-item">
-      <h3>На каких устройствах работает?</h3>
-      <p>Ключи работают на Windows, macOS, Linux, iOS и Android. Достаточно установить любой клиент, поддерживающий VLESS/Xray.</p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Как пополнить баланс?</h3>
-      <p>В Telegram-боте перейдите в раздел «Кабинет → Пополнить баланс» и выберите удобную сумму. Оплата происходит через Telegram Stars.</p>
+      <h3>Как оплатить подписку?</h3>
+      <p>Перейдите в раздел «Тарифы», выберите план и оплатите подписку через Telegram-бота. Автопродление отключается в личном кабинете в один клик.</p>
     </div>
 
     <div class="faq-item">
@@ -93,12 +104,12 @@ body {
 
     <div class="faq-item">
       <h3>Куда обращаться в случае проблем?</h3>
-      <p>По всем вопросам пишите в поддержку через Telegram-бота в разделе «Поддержка».</p>
+      <p>По всем вопросам пишите в поддержку через раздел «Поддержка» на сайте или через Telegram-бота.</p>
     </div>
   </div>
 
   <footer class="footer">
-    © 2026 DreamCore. Воплощаем цифровые мечты.
+    © 2026 DreamCore Access. Защищённый доступ к вашим ресурсам.
   </footer>
 </div>
 

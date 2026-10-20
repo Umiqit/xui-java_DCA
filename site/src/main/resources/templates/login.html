@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Вход — DreamCore</title>
+<title>Вход — DreamCore Access</title>
 <link rel="icon" href="/favicon/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
@@ -84,8 +84,12 @@ body {
   background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-secondary));
   border-radius: var(--md-sys-shape-corner-medium);
   display: grid; place-items: center;
-  margin-bottom: 1.5rem;
   box-shadow: var(--md-elevation-1);
+  flex-shrink: 0;
+}
+
+.rail > .rail-logo {
+  margin-bottom: 1.5rem;
 }
 
 .rail-logo svg { width: 22px; height: 22px; fill: var(--md-sys-color-on-primary); }
@@ -373,6 +377,13 @@ body {
     if(xhr.readyState===4 && xhr.status===200){
       var ph = document.getElementById('rail-placeholder');
       if(ph) ph.outerHTML = xhr.responseText;
+      var page = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.rail-item').forEach(function(el){
+        var href = el.getAttribute('href');
+        var dataPage = el.getAttribute('data-page');
+        if(href && (href === page || href.endsWith('/' + page) || page === href.split('?')[0])) el.classList.add('active');
+        if(dataPage && page.startsWith(dataPage)) el.classList.add('active');
+      });
     }
   };
   xhr.send();
@@ -403,7 +414,7 @@ body {
     </div>
 
     <p class="info-text anim anim-d3">
-      Авторизуясь, вы соглашаетесь с <a href="offer.html">офертой</a> и <a href="privacy.html">политикой конфиденциальности</a>.
+      Авторизуясь, вы соглашаетесь с <a href="/offer">офертой</a> и <a href="/privacy">политикой конфиденциальности</a>.
     </p>
   </div>
 </div>
