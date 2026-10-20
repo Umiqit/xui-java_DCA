@@ -612,7 +612,7 @@
 <script>
 (function(){
   var xhr = new XMLHttpRequest();
-  xhr.open('GET','/rail.html',true);
+  xhr.open('GET','/rail.html?v='+Date.now(),true);
   xhr.onreadystatechange=function(){
     if(xhr.readyState===4 && xhr.status===200){
       var ph = document.getElementById('rail-placeholder');
@@ -621,7 +621,7 @@
       document.querySelectorAll('.rail-item').forEach(function(el){
         var href = el.getAttribute('href');
         var dataPage = el.getAttribute('data-page');
-        if(href && (href === page || href.endsWith('/' + page) || page === href.split('?')[0])) el.classList.add('active');
+        if(href && (href === page || href.endsWith('/' + page) || page === href.split('?')[0] || page === href.split('#')[1])) el.classList.add('active');
         if(dataPage && page.startsWith(dataPage)) el.classList.add('active');
       });
     }

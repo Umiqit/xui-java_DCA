@@ -850,7 +850,7 @@ body {
 <script>
 (function(){
   var xhr = new XMLHttpRequest();
-  xhr.open('GET','/rail.html',true);
+  xhr.open('GET','/rail.html?v='+Date.now(),true);
   xhr.onreadystatechange=function(){
     if(xhr.readyState===4 && xhr.status===200){
       var ph = document.getElementById('rail-placeholder');
@@ -859,7 +859,7 @@ body {
       document.querySelectorAll('.rail-item').forEach(function(el){
         var href = el.getAttribute('href');
         var dataPage = el.getAttribute('data-page');
-        if(href && (href === page || href.endsWith('/' + page) || page.startsWith(href.replace('/','')))) el.classList.add('active');
+        if(href && (href === page || href.endsWith('/' + page) || page === href.split('#')[1] || page.startsWith(href.replace('/','')))) el.classList.add('active');
         if(dataPage && page.startsWith(dataPage)) el.classList.add('active');
       });
       setupScrollSpy();
@@ -873,7 +873,7 @@ body {
       {id:'features', href:'/#features'},
       {id:'audience', href:'/#audience'},
       {id:'pricing',  href:'/#pricing'},
-      {id:'faq',      href:'/faq'}
+      {id:'faq',      href:'/#faq'}
     ];
     function setActive(href){
       document.querySelectorAll('.rail-item').forEach(function(el){
@@ -884,24 +884,33 @@ body {
     function onScroll(){
       if(ticking) return;
       ticking = true;
-      requestAnimationFrame(function(){
-        ticking = false;
-        if(window.scrollY < 200){
-          setActive('/');
-          return;
-        }
-        var pos = window.scrollY + window.innerHeight * 0.35;
-        var current = '/';
-        sections.forEach(function(s){
-          var el = document.getElementById(s.id);
-          if(el && el.offsetTop <= pos) current = s.href;
-        });
-        setActive(current);
+      setTimeout(function(){ ticking = false; }, 100);
+      if(window.scrollY < 200){
+        setActive('/');
+        return;
+      }
+      var pos = window.scrollY + window.innerHeight * 0.35;
+      var current = '/';
+      sections.forEach(function(s){
+        var el = document.getElementById(s.id);
+        if(el && el.offsetTop <= pos) current = s.href;
       });
+      // У самого низа страницы активируем последнюю секцию, даже если она короткая
+      if(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4){
+        current = sections[sections.length - 1].href;
+      }
+      setActive(current);
     }
     window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('hashchange', function(){ onScroll(); setTimeout(onScroll, 400); });
     window.addEventListener('load', onScroll);
     onScroll();
+    // Страховка: несколько проходов после загрузки, чтобы подсветка встала на место
+    var passes = 0;
+    var settle = setInterval(function(){
+      onScroll();
+      if(++passes >= 6) clearInterval(settle);
+    }, 700);
   }
 })();
 </script>
@@ -921,7 +930,7 @@ body {
       <nav class="topnav">
         <a href="#pricing" target="_self">Тарифы</a>
         <a href="#audience" target="_self" class="nav-mid">Для кого</a>
-        <a href="/faq">FAQ</a>
+        <a href="/#faq" target="_self">FAQ</a>
         <a href="/support">Поддержка</a>
         <a href="/login" class="nav-login">Войти</a>
       </nav>
@@ -1127,7 +1136,27 @@ body {
 
       <div class="faq-item anim anim-d3">
         <h3>Какие устройства поддерживаются?</h3>
-        <p>iOS, Android, Windows и macOS. Под одной подпиской можно подключить до 5 устройств.</p>
+        <p>iOS, Android, Windows и macOS. Под одной подпиской можно подключить до 5 устройств. Достаточно установить любой клиент, поддерживающий VLESS/Xray.</p>
+      </div>
+
+      <div class="faq-item anim">
+        <h3>Как подключиться?</h3>
+        <p>После оформления подписки вы получаете ссылку для подключения. Скопируйте её в приложение V2Ray, Nekoray, V2RayNG или аналогичное — настройка занимает пару минут.</p>
+      </div>
+
+      <div class="faq-item anim">
+        <h3>Как оплатить подписку?</h3>
+        <p>Перейдите в раздел «Тарифы», выберите план и оплатите подписку через Telegram-бота. Автопродление отключается в личном кабинете в один клик.</p>
+      </div>
+
+      <div class="faq-item anim">
+        <h3>Можно ли вернуть деньги?</h3>
+        <p>Возврат возможен в течение 24 часов с момента покупки при условии, что ключ не был активирован. Подробности на странице «Политика возврата».</p>
+      </div>
+
+      <div class="faq-item anim">
+        <h3>Куда обращаться в случае проблем?</h3>
+        <p>По всем вопросам пишите в поддержку через раздел «Поддержка» на сайте или через Telegram-бота.</p>
       </div>
 
     </div>
@@ -1176,7 +1205,8 @@ body {
           </a>
         </div>
       </div>
-      <div class="footer-legal">Юридический email: <a href="mailto:legal@dreamcore-access.ru">legal@dreamcore-access.ru</a></div>
+      <!-- TODO: вставить юридический email, когда появится -->
+      <div class="footer-legal">Юридический email:</div>
       <div class="footer-copy">© 2026 DreamCore Access. Защищённый доступ к вашим ресурсам.</div>
     </div>
   </footer>

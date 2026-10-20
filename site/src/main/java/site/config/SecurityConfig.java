@@ -44,7 +44,7 @@ public class SecurityConfig {
     private static final List<String> PUBLIC_PATHS = List.of(
             "/", "/login", "/logout", "/auth/telegram", "/error",
             "/index.html", "/rail.html", "/favicon.ico",
-            "/faq", "/faq.html", "/offer", "/offer.html",
+            "/offer", "/offer.html",
             "/privacy", "/privacy.html", "/return-policy", "/return-policy.html",
             "/warranty", "/warranty.html", "/DreamCore.svg"
     );
